@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/jsparber/Credit",
   "dependencies": {
-    "react": "^0.12.2"
+    "browserify": "^9.0.3",
+    "react": "^0.12.2",
+    "reactify": "^1.0.0"
   }
 }
