@@ -35,7 +35,9 @@ var Content = React.createClass({
 				<section id="content">
 				<Number number={this.props.data.number}/>
 				<Credit credit={this.props.data.credit}/>
+				<div className="space" />
 				<Traffic traffic={this.props.data.traffic}/>
+				<div className="space" />
 				<TimeInterval intervall={this.props.data.interval}/>
 				</section>
 				);
