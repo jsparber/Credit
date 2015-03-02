@@ -1,7 +1,7 @@
 var React = require('react');
 var data = {
-	"number" : +3933745678,
-	"credit" : 10.5,
+	"number" : "+3933745678",
+	"credit" : "10,50€" ,
 	"traffic" : [
 	{
 		"title" : "talking",
@@ -36,31 +36,31 @@ var Content = React.createClass({
 	}
 });
 
-var Credit = React.createClass({
+var Number = React.createClass({
 	render: function() {
 		return(
 				<div>
-					<span>
-						Credit
-					</span>
-					<span>
-						{this.props.credit}
-					</span>
+					<h3>
+						Number
+					</h3>
+					<h2>
+						{this.props.number}
+					</h2>
 				</div>
 				);
 	}
 });
 
-var Number = React.createClass({
+var Credit = React.createClass({
 	render: function() {
 		return(
 				<div>
-					<span>
-						Number
-					</span>
-					<span>
-						{this.props.number}
-					</span>
+					<h3>
+						Credit
+					</h3>
+					<h1>
+						{this.props.credit}
+					</h1>
 				</div>
 				);
 	}
@@ -83,9 +83,20 @@ var Traffic = React.createClass({
 
 var Bonus = React.createClass({
 	render: function() {
+		var divStyle = {
+			width: this.props.data.remaining/this.props.data.total*100 + "%"
+		};
 		return(
 				<div>
-					{this.props.data}
+				<h3>
+				{this.props.data.title}:
+				</h3>
+				<h1>
+			 	{this.props.data.remaining} / {this.props.data.total}
+				</h1>
+				<div className="beam">
+				<div className="remaining" style={divStyle} />
+				</div>
 				</div>
 				);
 	}
