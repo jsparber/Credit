@@ -18,7 +18,12 @@ var data = {
 			"total" : 1024,
 			"remaining" : 250
 		}
-	]
+	],
+  "interval" : {
+		"title" : "Days",
+		"deadline" : "Mon Mar 01 2015 17:25:45 GMT+0100 (CET)",
+		"days" : "30"
+	}
 };
 
 
@@ -30,7 +35,7 @@ var Content = React.createClass({
 				<Number number={this.props.data.number}/>
 				<Credit credit={this.props.data.credit}/>
 				<Traffic traffic={this.props.data.traffic}/>
-				<TimeInterval />
+				<TimeInterval intervall={this.props.data.interval}/>
 				</section>
 				);
 	}
@@ -89,13 +94,14 @@ var Bonus = React.createClass({
 		return(
 				<div>
 				<h3>
-				{this.props.data.title}:
+				{this.props.data.title}
 				</h3>
 				<h1>
 			 	{this.props.data.remaining} / {this.props.data.total}
 				</h1>
 				<div className="beam">
 				<div className="remaining" style={divStyle} />
+				<div className="used" />
 				</div>
 				</div>
 				);
@@ -104,16 +110,34 @@ var Bonus = React.createClass({
 
 var TimeInterval = React.createClass({
 	render: function() {
+		var deadline = new Date(this.props.intervall.deadline);
+		console.log(deadline);
+		var total = this.props.intervall.days;
+		var remaining = 0;
+		var dayList = [];
+				for(var i = 0; i < this.props.intervall.days; i++)
+					dayList.push(<Days />);
+
 		return(
-				<div />
+				<div>
+				<h3>
+				{this.props.intervall.title}:
+				</h3>
+				<h1>
+			 	{remaining} / {total}
+				</h1>
+				<div className="beam">
+				{dayList}
+				</div>
+				</div>
 				);
 	}
 });
 
-var BonusInterval = React.createClass({
+var Days = React.createClass({
 	render: function() {
 		return(
-				<div />
+				<div className="days" />
 				);
 	}
 });
