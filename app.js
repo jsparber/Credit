@@ -1,4 +1,5 @@
 var React = require('react');
+var moment = require('moment');
 var data = {
 	"number" : "+3933745678",
 	"credit" : "10,50€" ,
@@ -21,8 +22,8 @@ var data = {
 	],
   "interval" : {
 		"title" : "Days",
-		"deadline" : "Mon Mar 01 2015 17:25:45 GMT+0100 (CET)",
-		"days" : "30"
+		"deadline" : "Mon Mar 04 2015 17:25:45 GMT+0100 (CET)",
+		"startdate" : "Mon Feb 02 2015 17:25:45 GMT+0100 (CET)",
 	}
 };
 
@@ -110,13 +111,22 @@ var Bonus = React.createClass({
 
 var TimeInterval = React.createClass({
 	render: function() {
-		var deadline = new Date(this.props.intervall.deadline);
-		console.log(deadline);
-		var total = this.props.intervall.days;
-		var remaining = 0;
+		var today = new Date();
+		today = moment(today);
+		var deadline = moment(this.props.intervall.deadline);
+		var startdate = moment(this.props.intervall.startdate);
+		var total = (deadline.diff(startdate, "days"));
+		var passed = (today.diff(startdate, "days"));
+		var remaining = deadline.diff(today, "days") + 1;
+		var months = {};
+		months.start = startdate.format("D MMMM");
+		months.end = deadline.format("D MMMM");
 		var dayList = [];
-				for(var i = 0; i < this.props.intervall.days; i++)
-					dayList.push(<Days />);
+				for(var i = 0; i < passed - 1; i++)
+					dayList.push(<Days class="days passedDays" />);
+				dayList.push(<Days class="days toDay" />);
+				for(var i = passed; i < total; i++)
+					dayList.push(<Days class="days remainingDays" />);
 
 		return(
 				<div>
@@ -129,6 +139,7 @@ var TimeInterval = React.createClass({
 				<div className="beam">
 				{dayList}
 				</div>
+				<Description months={months}/>
 				</div>
 				);
 	}
@@ -137,8 +148,23 @@ var TimeInterval = React.createClass({
 var Days = React.createClass({
 	render: function() {
 		return(
-				<div className="days" />
+				<div className={this.props.class} />
 				);
+	}
+});
+
+var Description = React.createClass({
+	render: function() {
+		return(
+			<div className="discription">	
+			<div>
+				{this.props.months.start}
+			</div>
+			<div>
+				{this.props.months.end}
+			</div>
+			</div>
+			)
 	}
 });
 
