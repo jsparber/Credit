@@ -11,32 +11,53 @@
 }
 html * {
 	font-family: roboto_condensedregular;
+  font-weight: 400;
 }
 
 h1 {
-	margin-left: 10px;
 	display: inline;
-	font-size: 20px;
-	margin: 0.5em;
+	font-size: 25px;
+	margin: 0;
 }
 
 h2 {
-	margin-left: 10px;
 	display: inline;
 	font-size: 16px;
-	margin: 0.5em;
+	margin: 0;
 }
 
 h3 {
-	margin-left: 5px;
 	display: inline-block;
+	font-size: 15px;
+	width: 75px;
+	margin: 0;
+}
+
+.values {
+	display: inline-block;
+}
+
+.remainingValues {
+  margin: 0;
+	margin-left: 0.5em;
+	margin-right: 0.1em;
+}
+
+.usedValues {
 	font-size: 14px;
-	width: 60px;
-	margin: 0.5em;
+  color: #666666;
 }
 
 .beam {
 	height: 30px;
+	width: 100%;
+	display: inline-flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.beamInterval {
+	height: 20px;
 	width: 100%;
 	display: inline-flex;
 	flex-direction: row;
