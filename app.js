@@ -27,7 +27,6 @@ var data = {
 	}
 };
 
-
 var Content = React.createClass({
 	render: function() {
 		console.log(this);
@@ -185,7 +184,10 @@ var Description = React.createClass({
 	}
 });
 
-React.render(
+render();
+function render(){
+  React.render(
 		<Content data={data}/>,
 		document.getElementById("container")
 		);
+}
