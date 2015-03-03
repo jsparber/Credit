@@ -108,7 +108,7 @@ var Traffic = React.createClass({
 var Bonus = React.createClass({
 	render: function() {
 		var divStyle = {
-			width: this.props.data.remaining/this.props.data.total*100 + "%"
+			width: this.props.data.remaining/this.props.data.total*100+ "%"
 		};
 		return(
 				<div>
@@ -116,9 +116,8 @@ var Bonus = React.createClass({
 				{this.props.data.title}
 				</h3>
         <Value value={this.props.data} />
-				<div className="beam">
+				<div className="beam used">
 				<div className="remaining" style={divStyle} />
-				<div className="used" />
 				</div>
 				</div>
 				);
