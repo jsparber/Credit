@@ -5,23 +5,23 @@ var data = {
 	"credit" : "10,50€" ,
 	"traffic" : [
 	{
-		"title" : "talking",
+		"title" : "Minuti",
 		"total" : 150,
 		"remaining" : 50
 	},
 	{
-		"title": "sms", 
+		"title": "Messaggi", 
 		"total" : 150,
 		"remaining" : 75
 	},
 		{
-			"title" : "internet",
+			"title" : "Megabyte",
 			"total" : 1024,
 			"remaining" : 250
 		}
 	],
   "interval" : {
-		"title" : "Days",
+		"title" : "Giorni",
 		"deadline" : "Mon Mar 04 2015 17:25:45 GMT+0100 (CET)",
 		"startdate" : "Mon Feb 02 2015 17:25:45 GMT+0100 (CET)",
 	}
@@ -44,12 +44,28 @@ var Content = React.createClass({
 	}
 });
 
+var Value = React.createClass({
+  render: function() {
+    return(
+        <div className="values">
+        <h1 className="remainingValues">
+			 	{this.props.value.remaining}
+        </h1>
+        <span className="usedValues">
+			 	 / {this.props.value.total}
+        </span>
+        </div>
+        )
+
+  }
+});
+
 var Number = React.createClass({
 	render: function() {
 		return(
 				<div>
 					<h3>
-						Number
+						Numero
 					</h3>
 					<h2>
 						{this.props.number}
@@ -64,7 +80,7 @@ var Credit = React.createClass({
 		return(
 				<div>
 					<h3>
-						Credit
+						Credito
 					</h3>
 					<h1>
 						{this.props.credit}
@@ -99,9 +115,7 @@ var Bonus = React.createClass({
 				<h3>
 				{this.props.data.title}
 				</h3>
-				<h1>
-			 	{this.props.data.remaining} / {this.props.data.total}
-				</h1>
+        <Value value={this.props.data} />
 				<div className="beam">
 				<div className="remaining" style={divStyle} />
 				<div className="used" />
@@ -119,26 +133,27 @@ var TimeInterval = React.createClass({
 		var startdate = moment(this.props.intervall.startdate);
 		var total = (deadline.diff(startdate, "days"));
 		var passed = (today.diff(startdate, "days"));
-		var remaining = deadline.diff(today, "days") + 1;
+		var remaining = deadline.diff(today, "days");
 		var months = {};
 		months.start = startdate.format("D MMMM");
 		months.end = deadline.format("D MMMM");
 		var dayList = [];
-				for(var i = 0; i < passed - 1; i++)
+				for(var i = 0; i < passed; i++)
 					dayList.push(<Days class="days passedDays" />);
 				dayList.push(<Days class="days toDay" />);
-				for(var i = passed; i < total; i++)
+				for(var i = passed; i < total-1; i++)
 					dayList.push(<Days class="days remainingDays" />);
 
+     var values = {"remaining" : remaining, "total" : total};
 		return(
 				<div>
 				<h3>
-				{this.props.intervall.title}:
+				{this.props.intervall.title}
 				</h3>
 				<h1>
-			 	{remaining} / {total}
+        <Value value={values} />
 				</h1>
-				<div className="beam">
+				<div className="beamInterval">
 				{dayList}
 				</div>
 				<Description months={months}/>
@@ -146,6 +161,7 @@ var TimeInterval = React.createClass({
 				);
 	}
 });
+
 
 var Days = React.createClass({
 	render: function() {
