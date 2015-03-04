@@ -12,6 +12,7 @@
 html * {
 	font-family: roboto_condensedregular;
   font-weight: 400;
+	background: #eeeeee;
 }
 
 h1 {
@@ -31,6 +32,11 @@ h3 {
 	font-size: 15px;
 	width: 75px;
 	margin: 0;
+}
+
+input {
+	background: #fff;
+	border: 0;
 }
 
 .values {
@@ -106,4 +112,9 @@ h3 {
 	display: inline-flex;
 	flex-direction: row;
 	justify-content: space-between;
+}
+
+.warning {
+	text-align: center;
+	margin-top: 25px;
 }

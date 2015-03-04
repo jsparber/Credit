@@ -27,6 +27,27 @@ var data = {
 	}
 };
 
+var loginViewData = {
+	"fields" : [
+	{
+		"title" : "Username",
+		"type"	: "text"
+	},
+	{
+		"title" : "Password",
+		"type"	: "password"
+	},
+		{
+			"title" : "",
+			"type"	: "submit",
+			"value" : "Login"
+
+		}
+	],
+	"warnings" : ["Please register first on your provider's website to obtain login credentials", "The login credentials are only sent to the selected provider"]
+}
+
+
 var Content = React.createClass({
 	render: function() {
 		console.log(this);
@@ -184,10 +205,74 @@ var Description = React.createClass({
 	}
 });
 
-render();
+//Login view
+
+
+var Login = React.createClass({
+	render: function() {
+		return(
+				<div>
+					<Fields fields={this.props.data.fields} />
+					<Warnings warnings={this.props.data.warnings} />
+				</div>
+
+				)
+	}
+});
+
+var Fields = React.createClass({
+	clickHandler: function(e) {
+		alert("Hello");
+		docdocument.cookie = "loggedin"
+	},
+	render: function() {
+		console.log(this.clickHandler);
+		var field = this.props.fields.map(function(el) {
+			return(
+				<div>
+					<h3>
+						{el.title}
+					</h3>
+					<input className="beam" type={el.type} value={el.value} />
+				</div>
+					);
+		});
+		return(
+				<div>
+				{field}
+				</div>
+				);
+	}
+});
+
+var Warnings = React.createClass({
+	render: function() {
+		return(
+				<div>
+					<div className="warning">
+						{this.props.warnings[0]}
+					</div>
+					<div className="warning">
+						{this.props.warnings[1]}
+					</div>
+				</div>
+				);
+	}
+});
+
+
+//render();
+render2();
 function render(){
   React.render(
 		<Content data={data}/>,
+		document.getElementById("container")
+		);
+}
+
+function render2(){
+  React.render(
+		<Login data={loginViewData}/>,
 		document.getElementById("container")
 		);
 }
