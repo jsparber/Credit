@@ -1,6 +1,6 @@
 var React = require("react");
 var moment = require("moment");
-var login2 = require("../modules/Credit-backend/index");
+var login = require("../modules/Credit-backend/index");
 
 var loginViewData = {
 	"fields" : [
@@ -197,9 +197,12 @@ var Login = React.createClass({
 
 var Fields = React.createClass({
 	clickHandler: function(e) {
-		console.log("Clicked");
+		console.log("Clicked", e);
 		document.cookie = "logedIn";
-		render();
+		var loginData = {};
+		loginData.user = document.getElementById("Username");
+		loginData.password = document.getElementById("Password");
+		login(loginData, render);
 	},
 	render: function() {
 		var clickHandler = this.clickHandler;
@@ -209,7 +212,7 @@ var Fields = React.createClass({
 					<h3>
 						{el.title}
 					</h3>
-					<input onClick={(el.type == "submit")? clickHandler : null} className="beam" type={el.type} value={el.value} />
+					<input id={el.title} onClick={(el.type == "submit")? clickHandler : null} className="beam" type={el.type} value={el.value} />
 				</div>
 					);
 		});
@@ -237,16 +240,17 @@ var Warnings = React.createClass({
 });
 
 
-//render();
-render2();
-function render(){
+renderLoginView();
+
+function render(data){
+	console.log("Data resived", data);
   React.render(
 		<Content data={data}/>,
 		document.getElementById("container")
 		);
 }
 
-function render2(){
+function renderLoginView(){
   React.render(
 		<Login data={loginViewData}/>,
 		document.getElementById("container")
