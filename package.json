@@ -1,0 +1,25 @@
+{
+  "name": "Credit",
+  "version": "1.0.0",
+  "description": "Frontend for a the Credit app witch i will write sooner or later. ###Demo [http://juliansparber.com/Credit/](http://juliansparber.com/Credit/)",
+  "main": "index.js",
+  "dependencies": {
+    "moment": "^2.9.0",
+    "react": "^0.12.2",
+    "reactify": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jsparber/Credit.git"
+  },
+  "author": "jSparber",
+  "license": "AGPLv3",
+  "bugs": {
+    "url": "https://github.com/jsparber/Credit/issues"
+  },
+  "homepage": "https://github.com/jsparber/Credit"
+}

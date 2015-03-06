@@ -1,0 +1,3 @@
+[submodule "modules/Credit-backend"]
+	path = modules/Credit-backend
+	url = https://github.com/jsparber/Credit-backend.git

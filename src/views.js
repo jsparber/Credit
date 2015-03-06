@@ -1,29 +1,6 @@
-var data = {
-	"number" : "+3933745678",
-	"credit" : "10,50€" ,
-	"traffic" : [
-	{
-		"title" : "Minuti",
-		"total" : 150,
-		"remaining" : 50
-	},
-	{
-		"title": "Messaggi", 
-		"total" : 150,
-		"remaining" : 75
-	},
-		{
-			"title" : "Megabyte",
-			"total" : 1024,
-			"remaining" : 250
-		}
-	],
-  "interval" : {
-		"title" : "Giorni",
-		"deadline" : "Mon Mar 04 2015 17:25:45 GMT+0100 (CET)",
-		"startdate" : "Mon Feb 02 2015 17:25:45 GMT+0100 (CET)",
-	}
-};
+var React = require("react");
+var moment = require("moment");
+var login2 = require("../modules/Credit-backend/index");
 
 var loginViewData = {
 	"fields" : [
