@@ -224,9 +224,7 @@ var Fields = React.createClass({
 		});
 		return(
 				<div>
-				<form action="">
 				{field}
-				</form>
 				</div>
 				);
 	}
