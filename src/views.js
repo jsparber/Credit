@@ -200,8 +200,9 @@ var Fields = React.createClass({
 		console.log("Clicked", e);
 		document.cookie = "logedIn";
 		var loginData = {};
-		loginData.user = document.getElementById("Username");
-		loginData.password = document.getElementById("Password");
+		loginData.user = document.getElementById("Username").value;
+		loginData.password = document.getElementById("Password").value;
+		console.log(loginData);
 		login(loginData, render);
 	},
 	render: function() {
@@ -241,6 +242,11 @@ var Warnings = React.createClass({
 
 
 renderLoginView();
+/*var loginData = {};
+loginData.user = "j.sparber";
+loginData.password = "MTHVyoYoIVER";
+login(loginData, render);
+*/
 
 function render(data){
 	console.log("Data resived", data);
