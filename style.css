@@ -54,6 +54,32 @@ input {
   color: #666666;
 }
 
+/* Loading icon */
+@keyframes spin {
+	from { transform: rotate(360deg); }
+	to { transform: rotate(0deg); }
+}
+
+
+@-webkit-keyframes spin {
+	from { -webkit-transform: rotate(360deg); }
+	to { -webkit-transform: rotate(0deg); }
+}
+
+.spinner {
+	animation: spin 1s infinite linear;
+	-webkit-animation: spin 1s infinite linear;
+}
+
+#reloadBtn {
+	font-size: 50px;
+  right: 8px;
+	top: -8px;
+  position: absolute;
+	cursor: pointer;
+}
+
+
 .beam {
 	height: 30px;
 	width: 100%;

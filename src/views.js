@@ -1,6 +1,6 @@
 var React = require("react");
 var moment = require("moment");
-var login = require("../modules/Credit-backend/index");
+var loadData = require("../modules/Credit-backend/index");
 
 var loginViewData = {
 	"fields" : [
@@ -24,10 +24,16 @@ var loginViewData = {
 
 
 var Content = React.createClass({
+	clickHandler: function() {
+		console.log("Reload Data");
+		document.getElementById("reloadBtn").className = "spinner";
+		loadData(render);
+	},
 	render: function() {
 		console.log(this);
 		return(
 				<section id="content">
+				<div onClick={this.clickHandler} id="reloadBtn">&#8634;</div>
 				<Number number={this.props.data.number}/>
 				<Credit credit={this.props.data.credit}/>
 				<div className="space" />
@@ -198,12 +204,11 @@ var Login = React.createClass({
 var Fields = React.createClass({
 	clickHandler: function(e) {
 		console.log("Clicked", e);
-		document.cookie = "logedIn";
 		var loginData = {};
 		loginData.user = document.getElementById("Username").value;
 		loginData.password = document.getElementById("Password").value;
 		console.log(loginData);
-		login(loginData, render);
+		loadData(render, loginData);
 	},
 	render: function() {
 		var clickHandler = this.clickHandler;
@@ -219,7 +224,9 @@ var Fields = React.createClass({
 		});
 		return(
 				<div>
+				<form action="">
 				{field}
+				</form>
 				</div>
 				);
 	}
@@ -241,12 +248,10 @@ var Warnings = React.createClass({
 });
 
 
-renderLoginView();
-/*var loginData = {};
-loginData.user = "j.sparber";
-loginData.password = "MTHVyoYoIVER";
-login(loginData, render);
-*/
+if (!localStorage.data)
+	renderLoginView();
+else
+	loadData(render);
 
 function render(error, data){
 	if(!error) {
@@ -255,6 +260,7 @@ function render(error, data){
 		<Content data={data}/>,
 		document.getElementById("container")
 		);
+		document.getElementById("reloadBtn").className = "";
 	}
 	else
 		document.getElementById("container").innerHTML = error;
