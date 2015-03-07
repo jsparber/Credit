@@ -248,12 +248,16 @@ loginData.password = "MTHVyoYoIVER";
 login(loginData, render);
 */
 
-function render(data){
+function render(error, data){
+	if(!error) {
 	console.log("Data resived", data);
   React.render(
 		<Content data={data}/>,
 		document.getElementById("container")
 		);
+	}
+	else
+		document.getElementById("container").innerHTML = error;
 }
 
 function renderLoginView(){
