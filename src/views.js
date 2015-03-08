@@ -3,23 +3,27 @@ var moment = require("moment");
 var loadData = require('Credit-backend');
 
 var loginViewData = {
-	"fields" : [
-	{
-		"title" : "Username",
-		"type"	: "text"
-	},
-	{
-		"title" : "Password",
-		"type"	: "password"
-	},
-		{
-			"title" : "",
-			"type"	: "submit",
-			"value" : "Login"
+	"providers" : [{
+		"name": "Postemobile",
+	}, {
+		"name": "Tre",
+	}, {
+		"name": "TIM",
+	}, {
+		"name": "Vodafone",
+	}],
 
+		"fields" : [
+		{
+			"title" : "Username",
+			"type"	: "text"
+		},
+		{
+			"title" : "Password",
+			"type"	: "password"
 		}
-	],
-	"warnings" : ["Please register first on your provider's website to obtain login credentials", "The login credentials are only sent to the selected provider"]
+		],
+		"warnings" : ["Please register first on your provider's website to obtain login credentials", "The login credentials are only sent to the selected provider"]
 }
 
 
@@ -47,31 +51,31 @@ var Content = React.createClass({
 });
 
 var Value = React.createClass({
-  render: function() {
-    return(
-        <div className="values">
-        <h1 className="remainingValues">
-			 	{this.props.value.remaining}
-        </h1>
-        <span className="usedValues">
-			 	 / {this.props.value.total}
-        </span>
-        </div>
-        )
+	render: function() {
+		return(
+				<div className="values">
+				<h1 className="remainingValues">
+				{this.props.value.remaining}
+				</h1>
+				<span className="usedValues">
+				/ {this.props.value.total}
+				</span>
+				</div>
+				)
 
-  }
+	}
 });
 
 var Number = React.createClass({
 	render: function() {
 		return(
 				<div>
-					<h3>
-						Numero
-					</h3>
-					<h2>
-						{this.props.number}
-					</h2>
+				<h3>
+				Numero
+				</h3>
+				<h2>
+				{this.props.number}
+				</h2>
 				</div>
 				);
 	}
@@ -81,12 +85,12 @@ var Credit = React.createClass({
 	render: function() {
 		return(
 				<div>
-					<h3>
-						Credito
-					</h3>
-					<h1>
-						{this.props.credit}
-					</h1>
+				<h3>
+				Credito
+				</h3>
+				<h1>
+				{this.props.credit}
+				</h1>
 				</div>
 				);
 	}
@@ -194,7 +198,7 @@ var Login = React.createClass({
 	render: function() {
 		return(
 				<div>
-					<Fields fields={this.props.data.fields} />
+					<Fields fields={this.props.data.fields} providers={this.props.data.providers} />
 					<Warnings warnings={this.props.data.warnings} />
 				</div>
 
@@ -204,27 +208,31 @@ var Login = React.createClass({
 
 var Fields = React.createClass({
 	clickHandler: function(e) {
-		console.log("Clicked", e);
 		var loginData = {};
 		loginData.user = document.getElementById("Username").value;
 		loginData.password = document.getElementById("Password").value;
 		loadData(loginData, render);
 	},
 	render: function() {
-		var clickHandler = this.clickHandler;
 		var field = this.props.fields.map(function(el) {
 			return(
 				<div>
 					<h3>
 						{el.title}
 					</h3>
-					<input id={el.title} onClick={(el.type == "submit")? clickHandler : null} className="beam" type={el.type} value={el.value} />
+					<input id={el.title} className="beam" type={el.type} value={el.value} />
 				</div>
 					);
 		});
 		return(
 				<div>
-				{field}
+					{field}
+					<h3>
+						Provider
+					</h3>
+				<Dropdown list={this.props.providers} />
+				<h3 />
+				<input onClick={this.clickHandler} className="beam" type="submit" value="Login" />
 				</div>
 				);
 	}
@@ -242,6 +250,44 @@ var Warnings = React.createClass({
 					</div>
 				</div>
 				);
+	}
+});
+
+var Dropdown = React.createClass({
+	getInitialState: function() {
+		return {
+			listVisible: false,
+			selected: this.props.list[0].name
+		};
+	},
+	select: function(item) {
+		this.setState({listVisible: false, selected : item.name});
+	},
+	clickHandler: function(e) {
+		this.setState({ listVisible: !this.state.listVisible });
+	},
+	render: function() {
+		return(
+			<div className="dropdown-container">
+				<div className="dropdown-display" onClick={this.clickHandler}>
+					{this.state.selected}
+					<span className="angle-down" />
+				</div>
+				<div className={"dropdown-list" + (this.state.listVisible ? " show" : "")}>
+				{this.renderListItems()}
+				</div>
+			</div>
+			);
+	},
+	renderListItems: function() {
+		var items = [];
+		for (var i = 0; i < this.props.list.length; i++) {
+			var item = this.props.list[i];
+			items.push(<div onClick={this.select.bind(null, item)}>
+					{item.name}
+					</div>);
+		}
+		return items;
 	}
 });
 
@@ -264,7 +310,7 @@ function render(error, data){
 		document.getElementById("reloadBtn").className = "";
 	}
 	else
-		document.getElementById("container").innerHTML = error;
+		document.getElementById("container").innerHTML = JSON.stringify(error);
 }
 
 function renderLoginView(){
