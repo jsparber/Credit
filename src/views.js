@@ -1,6 +1,6 @@
 var React = require("react");
 var moment = require("moment");
-var loadData = require("../modules/Credit-backend/index");
+var loadData = require('Credit-backend');
 
 var loginViewData = {
 	"fields" : [
@@ -27,7 +27,8 @@ var Content = React.createClass({
 	clickHandler: function() {
 		console.log("Reload Data");
 		document.getElementById("reloadBtn").className = "spinner";
-		loadData(render);
+		var userData = JSON.parse(localStorage.data);
+		loadData(userData, render);
 	},
 	render: function() {
 		console.log(this);
@@ -207,8 +208,7 @@ var Fields = React.createClass({
 		var loginData = {};
 		loginData.user = document.getElementById("Username").value;
 		loginData.password = document.getElementById("Password").value;
-		console.log(loginData);
-		loadData(render, loginData);
+		loadData(loginData, render);
 	},
 	render: function() {
 		var clickHandler = this.clickHandler;
@@ -248,16 +248,19 @@ var Warnings = React.createClass({
 
 if (!localStorage.data)
 	renderLoginView();
-else
-	loadData(render);
+else{
+	var userData = JSON.parse(localStorage.data);
+	loadData(userData, render);
+}
 
 function render(error, data){
 	if(!error) {
-	console.log("Data resived", data);
-  React.render(
-		<Content data={data}/>,
-		document.getElementById("container")
-		);
+		localStorage.data = JSON.stringify(data);
+		console.log("Data resived", data);
+		React.render(
+				<Content data={data}/>,
+				document.getElementById("container")
+				);
 		document.getElementById("reloadBtn").className = "";
 	}
 	else
@@ -265,8 +268,8 @@ function render(error, data){
 }
 
 function renderLoginView(){
-  React.render(
-		<Login data={loginViewData}/>,
-		document.getElementById("container")
-		);
+	React.render(
+			<Login data={loginViewData}/>,
+			document.getElementById("container")
+			);
 }

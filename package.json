@@ -4,6 +4,7 @@
   "description": "Frontend for a the Credit app witch i will write sooner or later. ###Demo [http://juliansparber.com/Credit/](http://juliansparber.com/Credit/)",
   "main": "index.js",
   "dependencies": {
+    "Credit-backend": "git://github.com/jsparber/Credit-backend",
     "moment": "^2.9.0",
     "react": "^0.12.2",
     "reactify": "^1.0.0"
