@@ -171,3 +171,9 @@ input {
 .dropdown-list.show {
 	display: block;
 }
+
+.error {
+	background: #F9C64C;
+	width: 100%;
+	line-height: 30px;
+}

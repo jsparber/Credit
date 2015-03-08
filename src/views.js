@@ -191,11 +191,11 @@ var Description = React.createClass({
 
 //Login view
 
-
 var Login = React.createClass({
 	render: function() {
 		return(
 				<div>
+					<div className="error">{this.props.error}</div>
 					<Fields fields={this.props.data.fields} providers={this.props.data.providers} />
 					<Warnings warnings={this.props.data.warnings} />
 				</div>
@@ -320,12 +320,12 @@ function render(error, data){
 		document.getElementById("reloadBtn").className = "";
 	}
 	else
-		document.getElementById("container").innerHTML = JSON.stringify(error);
+		renderLoginView(error);
 }
 
-function renderLoginView(){
+function renderLoginView(error){
 	React.render(
-			<Login data={loginViewData}/>,
+			<Login data={loginViewData} error={error} />,
 			document.getElementById("container")
 			);
 }
