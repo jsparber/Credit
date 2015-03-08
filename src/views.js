@@ -29,13 +29,11 @@ var loginViewData = {
 
 var Content = React.createClass({
 	clickHandler: function() {
-		console.log("Reload Data");
 		document.getElementById("reloadBtn").className = "spinner";
 		var userData = JSON.parse(localStorage.data);
 		loadData(userData, render);
 	},
 	render: function() {
-		console.log(this);
 		return(
 				<section id="content">
 				<div onClick={this.clickHandler} id="reloadBtn">&#8634;</div>
@@ -207,11 +205,19 @@ var Login = React.createClass({
 });
 
 var Fields = React.createClass({
+	getInitialState: function() {
+	return {provider: this.props.providers[0]};
+	},
 	clickHandler: function(e) {
 		var loginData = {};
 		loginData.user = document.getElementById("Username").value;
 		loginData.password = document.getElementById("Password").value;
+		loginData.provider = this.state.provider.name;
+		console.log(loginData);
 		loadData(loginData, render);
+	},
+	selectHandler: function(el) {
+		this.setState(el);
 	},
 	render: function() {
 		var field = this.props.fields.map(function(el) {
@@ -230,7 +236,7 @@ var Fields = React.createClass({
 					<h3>
 						Provider
 					</h3>
-				<Dropdown list={this.props.providers} />
+				<Dropdown list={this.props.providers} selectHandler={this.selectHandler} />
 				<h3 />
 				<input onClick={this.clickHandler} className="beam" type="submit" value="Login" />
 				</div>
@@ -255,13 +261,15 @@ var Warnings = React.createClass({
 
 var Dropdown = React.createClass({
 	getInitialState: function() {
+		//this.props.selectHandler({provider: this.props.list[0]});
 		return {
 			listVisible: false,
-			selected: this.props.list[0].name
+			provider: this.props.list[0]
 		};
 	},
 	select: function(item) {
-		this.setState({listVisible: false, selected : item.name});
+		this.setState({listVisible: false, provider : item});
+		this.props.selectHandler({provider: item});
 	},
 	clickHandler: function(e) {
 		this.setState({ listVisible: !this.state.listVisible });
@@ -270,7 +278,7 @@ var Dropdown = React.createClass({
 		return(
 			<div className="dropdown-container">
 				<div className="dropdown-display" onClick={this.clickHandler}>
-					{this.state.selected}
+					{this.state.provider.name}
 					<span className="angle-down" />
 				</div>
 				<div className={"dropdown-list" + (this.state.listVisible ? " show" : "")}>
@@ -283,9 +291,11 @@ var Dropdown = React.createClass({
 		var items = [];
 		for (var i = 0; i < this.props.list.length; i++) {
 			var item = this.props.list[i];
+			if (item !== this.state.provider){
 			items.push(<div onClick={this.select.bind(null, item)}>
 					{item.name}
 					</div>);
+			}
 		}
 		return items;
 	}
